@@ -2,6 +2,8 @@
 
 ## report structure
 
+everyone sends personal report
+
 ## links
 
 homework: <https://bit.ly/chmurypwr>  
