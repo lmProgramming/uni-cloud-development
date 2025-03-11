@@ -2,6 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import path from "path";
 import morgan from "morgan";
 import bodyParser from "body-parser";
+import serverless from "serverless-http";
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -14,6 +15,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Set EJS as the view engine
 app.set("view engine", "ejs");
+
+app.set("views", path.join(__dirname, "views"));
 
 // Main route
 app.get("/", (req: Request, res: Response) => {
@@ -57,3 +60,5 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
   res.status(500).render("error", { title: "Błąd serwera" });
 });
+
+module.exports.handler = serverless(app);

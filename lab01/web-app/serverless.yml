@@ -18,3 +18,8 @@ functions:
 
 plugins:
   - serverless-offline
+
+custom:
+  serverless-offline:
+    httpPort: 3000
+    noPrependStageInUrl: true
