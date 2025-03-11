@@ -1,7 +1,29 @@
 # web app
 
-## running
+## Setup and Development
+
+### Installation
 
 ```sh
-node server.js 
+npm install
+```
+
+### Build (Compile TypeScript)
+
+```sh
+npm run build
+```
+
+### Running
+
+```sh
+npm start
+```
+
+### Development Mode
+
+For development with automatic recompilation and server restart:
+
+```sh
+npm run dev
 ```
