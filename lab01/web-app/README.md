@@ -38,3 +38,17 @@ docker run -p 8080:8080 jantar/node-web-app
 ```
 
 You can replace "jantar" with other username in both commands.
+
+### Vercel
+
+If you don't have vercel, install it
+
+```sh
+npm install -g vercel
+```
+
+and then to update vercel serverless version
+
+```sh
+vercel
+```
