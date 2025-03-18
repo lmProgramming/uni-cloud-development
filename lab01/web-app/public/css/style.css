@@ -4,7 +4,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-color: #22272B;
+  color: #B6C2CF;
 }
 
 body {
@@ -12,11 +13,25 @@ body {
   flex-direction: column;
 }
 
-header {
-  background-color: #333;
-  color: #fff;
-  padding: 10px 0;
+.navbar {
+  background-color: #101204;
   text-align: center;
+}
+
+.navbar .nav-link {
+  color: #B6C2CF;
+}
+
+.navbar .nav-link:hover {
+  color: #ffffff;
+}
+
+.navbar-brand {
+  color: #B6C2CF;
+}
+
+.navbar-brand:hover {
+  color: #ffffff;
 }
 
 .container {
@@ -27,7 +42,7 @@ header {
 
 .main {
   padding: 20px;
-  background: #fff;
+  background: #DBCEB6;
   margin-top: 20px;
 }
 
@@ -38,11 +53,16 @@ header {
 }
 
 .site-footer {
-  background-color: #333;
-  color: #fff;
+  background-color: #101204;
+  color: #B6C2CF;
   text-align: center;
   padding: 5px 0;
   position: relative;
   bottom: 0;
   width: 100%;
+}
+
+.game-logo {
+  width: 50px;
+  height: 50px;
 }
