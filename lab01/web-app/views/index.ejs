@@ -2,50 +2,56 @@
 <html>
   <head>
     <title><%= title %></title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
   </head>
   <body>
-    <header>
-      <div class="container">
-        <h1><%= title %></h1>
+    <%- include('partials/navbar') %>
+    <div class="container mt-5">
+      <div id="about" class="my-5">
+        <h2>About me</h2>
+        <p>
+          Hi, my name is Mikołaj Kubś and I'm a software engineer with
+          experience in many fields of programming. I'm most experienced in Game
+          Development, Data Analysis and Script Automation.
+        </p>
       </div>
-    </header>
-    <div class="container main">
-      <h2>About me</h2>
-      <p>
-        Hi, my name is Mikołaj Kubś and I'm a softwaree engineer with experience
-        in many fields of programming. I'm most experienced in Game Development,
-        Data Analysis and Script Automation.
-      </p>
-      <h2>Projects</h2>
-      <ul>
-        <li>
-          <a
-            href="https://play.google.com/store/apps/details?id=com.LMProgramming.CellEvolution"
-            >Cell Evolution</a
-          >
-        </li>
-        <li>
-          <a
-            href="https://play.google.com/store/apps/details?id=com.LMProgramming.AntsSimulator2TotalWar"
-            >Ants Simulator 2 - Total War</a
-          >
-        </li>
-        <li>
-          <a
-            href="https://play.google.com/store/apps/details?id=com.LMProgramming.NotQuiteTetris"
-            >Physical Blocks</a
-          >
-        </li>
-      </ul>
-      <h2>Contact</h2>
-      <p>
-        Contact me using a
-        <a href="/contact">contact form</a>.
-      </p>
+      <div id="projects" class="my-5">
+        <h2>Projects</h2>
+        <ul>
+          <li>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.LMProgramming.CellEvolution"
+              >Cell Evolution</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.LMProgramming.AntsSimulator2TotalWar"
+              >Ants Simulator 2 - Total War</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.LMProgramming.NotQuiteTetris"
+              >Physical Blocks</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div id="contact" class="my-5">
+        <h2>Contact</h2>
+        <p>Contact me using a <a href="/contact">contact form</a>.</p>
+      </div>
     </div>
-    <footer>
+    <footer class="bg-dark text-white text-center py-3">
       <p>&copy; 2025 Mikołaj Kubś. All rights reserved.</p>
     </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>
 </html>
