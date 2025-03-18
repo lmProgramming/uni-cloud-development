@@ -19,7 +19,7 @@ app.set("views", path.join(__dirname, "../views")); // Updated path to views dir
 
 // Main route
 app.get("/", (req: Request, res: Response) => {
-  res.render("index", { title: "Strona główna", message: "Witaj świecie!" });
+  res.render("index", { title: "Portfolio" });
 });
 
 // Start server
