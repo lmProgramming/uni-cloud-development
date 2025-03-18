@@ -8,3 +8,7 @@ everyone sends personal report
 
 homework: <https://bit.ly/chmurypwr>  
 current mail: <stanislaw.lota@gmail.com>
+
+## additional resources
+
+HTML5 UP

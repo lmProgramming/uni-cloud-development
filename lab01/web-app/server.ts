@@ -5,7 +5,6 @@ import bodyParser from "body-parser";
 import serverless from "serverless-http";
 
 const app = express();
-const port = process.env.PORT || 8080;
 
 // Middleware
 app.use(morgan("dev"));
@@ -15,16 +14,11 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Set EJS as the view engine
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "../views")); // Updated path to views directory
+app.set("views", path.join(__dirname, "../views"));
 
-// Main route
+// Routes
 app.get("/", (req: Request, res: Response) => {
   res.render("index", { title: "Portfolio" });
-});
-
-// Start server
-app.listen(port, () => {
-  console.log(`Aplikacja nasłuchuje na porcie ${port}`);
 });
 
 app.post("/", (req: Request, res: Response) => {
@@ -51,6 +45,7 @@ app.post("/submit-form", (req, res) => {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// Error handling
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(404).render("404", { title: "Nie znaleziono" });
 });
@@ -60,4 +55,5 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).render("error", { title: "Błąd serwera" });
 });
 
+module.exports = app;
 module.exports.handler = serverless(app);
