@@ -18,7 +18,7 @@ app.set("views", path.join(__dirname, "../views"));
 
 // Routes
 app.get("/", (req: Request, res: Response) => {
-  res.render("index", { title: "Portfolio" });
+  res.render("index", { title: "Mikołaj Kubś Portfolio" });
 });
 
 app.post("/", (req: Request, res: Response) => {
@@ -34,12 +34,11 @@ app.delete("/user", (req: Request, res: Response) => {
 });
 
 app.get("/contact", (req: Request, res: Response) => {
-  res.render("contact", { title: "Kontakt" });
+  res.render("contact", { title: "Contact" });
 });
 
 app.post("/submit-form", (req, res) => {
-  console.log(req.body);
-  res.send("Formularz został wysłany!");
+  res.render("contact-submitted", { title: "Form submitted" });
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
