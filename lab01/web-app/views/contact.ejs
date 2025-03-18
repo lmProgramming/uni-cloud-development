@@ -11,41 +11,43 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
   </head>
   <body>
-    <%- include('partials/navbar') %>
+    <div class="page-wrap">
+      <%- include('partials/navbar') %>
 
-    <div class="container mt-5">
-      <form action="/submit-form" method="POST">
-        <div class="form-group">
-          <label for="name">Imię</label>
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            name="name"
-            placeholder="Imię"
-          />
-        </div>
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            name="email"
-            placeholder="Email"
-          />
-        </div>
-        <div class="form-group">
-          <label for="message">Wiadomość</label>
-          <textarea
-            class="form-control"
-            id="message"
-            name="message"
-            placeholder="Wiadomość"
-          ></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Wyślij</button>
-      </form>
+      <div class="container mt-5">
+        <form action="/submit-form" method="POST">
+          <div class="form-group">
+            <label for="name">Imię</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              placeholder="Imię"
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              name="email"
+              placeholder="Email"
+            />
+          </div>
+          <div class="form-group">
+            <label for="message">Wiadomość</label>
+            <textarea
+              class="form-control"
+              id="message"
+              name="message"
+              placeholder="Wiadomość"
+            ></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Wyślij</button>
+        </form>
+      </div>
     </div>
 
     <%- include('partials/footer') %>
