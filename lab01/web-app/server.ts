@@ -11,6 +11,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../public")));
+app.use("/public", express.static(path.resolve(__dirname, "../public")));
 
 // Set EJS as the view engine
 app.set("view engine", "ejs");
@@ -54,5 +55,16 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).render("error", { title: "Błąd serwera" });
 });
 
-module.exports = app;
+// Final initialization
+const binaryMimeTypes = [
+  "image/png",
+  "image/jpeg",
+  "image/svg+xml",
+  "image/*",
+  "*/*"
+];
+
 module.exports.handler = serverless(app);
+module.exports.handler = serverless(app, {
+  binary: binaryMimeTypes
+});

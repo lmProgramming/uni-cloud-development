@@ -52,3 +52,9 @@ and then to update vercel serverless version
 ```sh
 vercel
 ```
+
+And to deploy to production
+
+```sh
+vercel --prod
+```

@@ -4,6 +4,14 @@ provider:
   runtime: nodejs18.x
   stage: dev
   region: eu-central-1
+  apiGateway:
+    binaryMediaTypes:
+      - '*/*'
+      - 'image/*'
+      - 'image/png'
+      - 'image/jpeg'
+      - 'image/svg+xml'
+      - 'image/webp'
 
 functions:
   app:
@@ -21,6 +29,8 @@ plugins:
 
 package:
   individually: true
+  include:
+    - public/**
 
 custom:
   serverless-offline:
