@@ -92,6 +92,11 @@ body {
 .tool-img img[src=""],
 .tool-img img[src="broken-link"] {
   display: none;
+  alt: "Image not available";
+}
+
+a {
+  text-decoration: underline;
 }
 
 .gallery-container {
