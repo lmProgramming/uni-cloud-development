@@ -93,3 +93,52 @@ body {
 .tool-img img[src="broken-link"] {
   display: none;
 }
+
+.gallery-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+}
+
+.gallery {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 300%;
+}
+
+.gallery-item {
+  flex: 0 0 50%;
+  text-align: center;
+  padding: 10px;
+}
+
+.gallery-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.left-arrow {
+  left: 0;
+}
+
+.right-arrow {
+  right: 0;
+}
