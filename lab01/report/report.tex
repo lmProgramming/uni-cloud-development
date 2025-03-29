@@ -1,5 +1,6 @@
 \documentclass[a4paper,12pt]{article}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{listings}
@@ -7,7 +8,7 @@
 \usepackage{geometry}
 \geometry{margin=1in}
 
-\title{Laboratorium 1}
+\title{Sprawozdanie z laboratorium 1}
 \author{Mikołaj Kubś 272662}
 \date{}
 
@@ -57,7 +58,7 @@ Za pomocą polecenia:
 \begin{lstlisting}
 serverless start-offline
 \end{lstlisting}
-można uruchomić aplikację w trybie offline, co pozwala na testowanie aplikacji bez potrzeby wdrażania jej na platformę chmurową. Problemem, który napotkałem podczas uruchamiania aplikacji w trybie offline, był brak dostępu do plików statycznych, tj. obrazów. Pozostałe pliki typu \texttt{js} oraz \texttt{css} w folderze \texttt{public} były dostępne. Mimo że pliki z obrazami były poprawnie przekazywane, to nie były wyświetlane. Żeby naprawić ten problem, trzeba było poprawić plik \textttt{serverless.yml}, dodając odpowiednie include'y i akceptowalne typy binarne mediów.
+można uruchomić aplikację w trybie offline, co pozwala na testowanie aplikacji bez potrzeby wdrażania jej na platformę chmurową. Problemem, który napotkałem podczas uruchamiania aplikacji w trybie offline, był brak dostępu do plików statycznych, tj. obrazów. Pozostałe pliki typu \texttt{js} oraz \texttt{css} w folderze \texttt{public} były dostępne. Mimo że pliki z obrazami były poprawnie przekazywane, to nie były wyświetlane. Żeby naprawić ten problem, trzeba było poprawić plik \texttt{serverless.yml}, dodając odpowiednie include'y i akceptowalne typy binarne mediów.
 
 \subsection{Wdrożenie aplikacji na Vercel}
 Aby wdrożyć aplikację na Vercel, należy zainstalować CLI Vercel oraz utworzyć konto na platformie. Następnie należy zalogować się do swojego konta za pomocą polecenia:

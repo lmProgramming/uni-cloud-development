@@ -19,15 +19,7 @@ npm run build
 ### Running
 
 ```sh
-npm start
-```
-
-### Development Mode
-
-For development with automatic recompilation and server restart:
-
-```sh
-npm run dev
+npm run offline
 ```
 
 ### Docker Build
