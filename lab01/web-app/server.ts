@@ -65,7 +65,6 @@ const binaryMimeTypes = [
   '*/*'
 ]
 
-module.exports.handler = serverless(app)
-module.exports.handler = serverless(app, {
-  binary: binaryMimeTypes
-})
+module.exports = (req: Request, res: Response) => {
+  app(req, res)
+}
