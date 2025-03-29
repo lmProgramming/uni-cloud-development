@@ -10,9 +10,7 @@ const app = express()
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static(path.join(__dirname, '../public')))
-app.use('/public', express.static(path.resolve(__dirname, '../public')))
-app.use('/dist/public', express.static(path.join(__dirname, '../dist/public')))
+app.use(express.static(path.join(__dirname, 'public')))
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs')
