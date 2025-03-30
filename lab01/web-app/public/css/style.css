@@ -23,7 +23,6 @@ body {
   font-family: 'Courier New', monospace;
   transition: all 0.3s ease;
   text-decoration: none;
-  /* Remove underline from button */
 }
 
 .projects-btn:hover {
@@ -103,95 +102,64 @@ a {
 }
 
 a {
-  /* General link styling - project links will override */
   color: #00ff90;
-  /* Use theme color for links */
   text-decoration: none;
-  /* Remove default underline */
 }
 
 a:hover {
   text-decoration: underline;
-  /* Add underline on hover */
 }
-
-
-/* === Gallery Styles (Update/Add These) === */
 
 .gallery-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Center gallery within container */
   position: relative;
   overflow: hidden;
   width: 100%;
-  /* max-width: 800px; /* Adjust max-width as needed */
   margin: auto;
   padding: 0 40px;
-  /* Add padding so arrows don't overlap content visually */
   box-sizing: border-box;
 }
 
 .gallery {
   display: flex;
-  /* transition: transform 0.5s ease-in-out; */
-  /* JS likely handles this */
-  /* width: ???%; */
-  /* Width might be set by JS based on item count */
+  transition: transform 0.3s ease-in-out;
 }
 
 .gallery-item {
   flex: 0 0 50%;
-  /* Default: Show 2 items */
   box-sizing: border-box;
-  /* Include padding in the width calculation */
   text-align: center;
-  padding: 15px;
-  /* Add some padding around items */
+  padding: 15px 20px;
   display: flex;
-  /* Use flex for vertical alignment */
   flex-direction: column;
-  /* Stack image and info vertically */
   align-items: center;
-  /* Center items horizontally */
 }
 
 .gallery-item .project-image {
-  /* Style the project image */
   display: block;
-  max-width: 100%;
-  height: auto;
-  /* Maintain aspect ratio */
-  max-height: 180px;
-  /* Optional: Limit image height */
+  width: 100%;
+  max-width: 180px;
+  height: 120px;
   margin-bottom: 15px;
-  /* Space below image */
   border-radius: 5px;
-  /* Slightly rounded corners */
   object-fit: contain;
-  /* Or 'cover', depending on desired image scaling */
 }
 
 .gallery-item .project-info {
-  /* Container for the text */
   flex-grow: 1;
-  /* Allow text area to grow if needed */
+  width: 100%;
 }
 
 .gallery-item a {
-  /* Project Name Link */
   display: block;
-  /* Make it block for centering and margins */
   font-weight: bold;
   font-size: 1.1em;
   color: #00ff90;
-  /* Theme color */
   text-decoration: none;
   margin-bottom: 8px;
-  /* Space below name */
   word-wrap: break-word;
-  /* Wrap long names */
   overflow-wrap: break-word;
 }
 
@@ -200,17 +168,13 @@ a:hover {
 }
 
 .project-description {
-  /* Project Description Text */
   font-size: 0.9em;
   color: #CABCA4;
-  /* Theme color */
   margin: 0;
-  /* Remove default paragraph margin */
   word-wrap: break-word;
   overflow-wrap: break-word;
   line-height: 1.4;
 }
-
 
 .gallery-arrow {
   position: absolute;
@@ -223,33 +187,43 @@ a:hover {
   cursor: pointer;
   z-index: 10;
   border-radius: 50%;
-  /* Make arrows circular */
   font-size: 18px;
   line-height: 1;
-  /* Ensure icon is centered */
+  transition: background-color 0.2s ease;
+}
+
+.gallery-arrow:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.gallery-arrow:not(:disabled):hover {
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .left-arrow {
   left: 5px;
-  /* Position near the edge */
 }
 
 .right-arrow {
   right: 5px;
-  /* Position near the edge */
 }
-
-/* === Responsiveness === */
 
 @media (max-width: 768px) {
   .gallery-item {
     flex: 0 0 100%;
-    /* Show only 1 item per slide on smaller screens */
+    padding: 15px 10px;
+    /* Adjust padding for single item view */
+  }
+
+  .gallery-item .project-image {
+    /* Optionally adjust image size for mobile */
+    /* max-width: 200px; */
+    /* height: 130px; */
   }
 
   .gallery-container {
     padding: 0 35px;
-    /* Adjust padding slightly for smaller arrows */
   }
 
   .gallery-arrow {
@@ -269,17 +243,11 @@ a:hover {
 @media (max-width: 480px) {
   .container {
     width: 95%;
-    /* Use more screen width on very small devices */
   }
 
-  /* You might add more mobile-specific adjustments here if needed */
+  .gallery-item .project-image {
+    /* Further adjustments if needed */
+    /* max-width: 160px; */
+    /* height: 100px; */
+  }
 }
-
-/* === REMOVE OLD/UNUSED STYLES === */
-/* Remove this if not used elsewhere, or ensure it doesn't conflict */
-/*
-.game-logo {
-  width: 50px;
-  height: 50px;
-}
-*/
