@@ -45,4 +45,7 @@ function popStateHandler() {
     if (loc === pageUrls.contact) { RenderContactPage(); }
     if (loc === pageUrls.about) { RenderAboutPage(); }
 }
+document.getElementById('theme-toggle').addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+})
 window.onpopstate = popStateHandler;

@@ -39,3 +39,16 @@ main {
 .title {
     font-size: 3rem;
 }
+
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+.dark-mode header {
+    background-color: #1e1e1e;
+}
+
+.dark-mode .header-link:hover {
+    border-bottom: 1px solid #ffffff;
+}
