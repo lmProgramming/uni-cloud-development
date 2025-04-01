@@ -139,12 +139,12 @@ a:hover {
 
 .gallery-item .project-image {
   display: block;
-  width: 100%;
-  max-width: 180px;
+  max-width: 120px;
   height: 120px;
   margin-bottom: 15px;
   border-radius: 5px;
-  object-fit: contain;
+  object-fit: cover;
+  border-radius: 20%;
 }
 
 .gallery-item .project-info {
@@ -213,13 +213,6 @@ a:hover {
   .gallery-item {
     flex: 0 0 100%;
     padding: 15px 10px;
-    /* Adjust padding for single item view */
-  }
-
-  .gallery-item .project-image {
-    /* Optionally adjust image size for mobile */
-    /* max-width: 200px; */
-    /* height: 130px; */
   }
 
   .gallery-container {
@@ -243,11 +236,5 @@ a:hover {
 @media (max-width: 480px) {
   .container {
     width: 95%;
-  }
-
-  .gallery-item .project-image {
-    /* Further adjustments if needed */
-    /* max-width: 160px; */
-    /* height: 100px; */
   }
 }
