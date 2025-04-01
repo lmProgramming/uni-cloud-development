@@ -46,38 +46,44 @@ Pliki statyczne, takie jak CSS, skrypty TypeScript czy grafiki, są przechowywan
 
 \subsection{Dockeryzacja}
 Aby utworzyć obraz Dockera, został stworzony plik \texttt{Dockerfile}, który zawiera instrukcje dotyczące budowy obrazu. Następnie za pomocą polecenia:
-\begin{lstlisting}
+\begin{lstlisting}[columns=fullflexible]
 docker build -t node-web-app .
 \end{lstlisting}
 został utworzony obraz o nazwie \texttt{node-web-app}. Po zbudowaniu obrazu, można uruchomić kontener za pomocą polecenia:
-\begin{lstlisting}
-docker run -p port:port -d node-web-app
+\begin{lstlisting}[columns=fullflexible]
+docker run -p 4000:4000 -d node-web-app
 \end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/docker.png}
+    \caption{Kontener załadowany w Docker Desktop}
+\end{figure}
 
 \subsection{Serverless}
 Aby przekształcić aplikację w tryb serverless, zostały wykorzystane dwie biblioteki: \texttt{serverless} oraz \texttt{serverless-http}. Następnie zmodyfikowano kod w pliku \texttt{server.ts} oraz dodano plik konfiguracyjny \texttt{serverless.yml}.
 
 Za pomocą polecenia:
-\begin{lstlisting}
+\begin{lstlisting}[columns=fullflexible]
 serverless start-offline
 \end{lstlisting}
 można uruchomić aplikację w trybie offline, co pozwala na testowanie aplikacji bez potrzeby wdrażania jej na platformę chmurową. Problemem, który napotkałem podczas uruchamiania aplikacji w trybie offline, był brak dostępu do plików statycznych, tj. obrazów. Pozostałe pliki typu \texttt{js} oraz \texttt{css} w folderze \texttt{public} były dostępne. Mimo że pliki z obrazami były poprawnie przekazywane, to nie były wyświetlane. Żeby naprawić ten problem, trzeba było poprawić plik \texttt{serverless.yml}, dodając odpowiednie include'y i akceptowalne typy binarne mediów.
 
 \subsection{Wdrożenie aplikacji na Vercel}
 Aby wdrożyć aplikację na Vercel, należy zainstalować CLI Vercel oraz utworzyć konto na platformie. Następnie należy zalogować się do swojego konta za pomocą polecenia:
-\begin{lstlisting}
+\begin{lstlisting}[columns=fullflexible]
 vercel login
 \end{lstlisting}
 Po zalogowaniu się można wdrożyć aplikację za pomocą polecenia:
-\begin{lstlisting}
+\begin{lstlisting}[columns=fullflexible]
 vercel
 \end{lstlisting}
 Oraz deployować na produkcję:
-\begin{lstlisting}
+\begin{lstlisting}[columns=fullflexible]
 vercel --prod
 \end{lstlisting}
 Oraz testować vercel lokalnie:
-\begin{lstlisting}
+\begin{lstlisting}[columns=fullflexible]
 vercel dev
 \end{lstlisting}
 Strona znajduje się pod linkiem: \href{https://web-app-five-dusky.vercel.app/}{Portfolio Mikołaj Kubś}.
