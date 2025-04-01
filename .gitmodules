@@ -1,3 +1,6 @@
 [submodule "lab02/azure-static-web-app"]
 	path = lab02/azure-static-web-app
 	url = https://github.com/lmProgramming/azure-static-web-app
+[submodule "lab02/lmProgramming.github.io"]
+	path = lab02/lmProgramming.github.io
+	url = https://github.com/lmProgramming/lmProgramming.github.io
