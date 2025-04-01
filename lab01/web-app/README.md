@@ -25,11 +25,9 @@ npm run offline
 ### Docker Build
 
 ```sh
-docker build -t jantar/node-web-app -f .dockerfile .
-docker run -p 8080:8080 jantar/node-web-app
+docker build -t node-web-app .
+docker run -p 8080:8080 -d node-web-app
 ```
-
-You can replace "jantar" with other username in both commands.
 
 ### Vercel
 

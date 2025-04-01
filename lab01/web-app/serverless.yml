@@ -6,12 +6,12 @@ provider:
   region: eu-central-1
   apiGateway:
     binaryMediaTypes:
-      - '*/*'
-      - 'image/*'
-      - 'image/png'
-      - 'image/jpeg'
-      - 'image/svg+xml'
-      - 'image/webp'
+      - "*/*"
+      - "image/*"
+      - "image/png"
+      - "image/jpeg"
+      - "image/svg+xml"
+      - "image/webp"
 
 functions:
   app:

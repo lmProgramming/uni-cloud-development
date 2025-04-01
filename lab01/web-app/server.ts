@@ -3,6 +3,7 @@ import path from 'path'
 import morgan from 'morgan'
 import bodyParser from 'body-parser'
 import serverless from 'serverless-http'
+import { Context } from 'vm'
 
 const app = express()
 
@@ -66,3 +67,4 @@ const binaryMimeTypes = [
 module.exports = (req: Request, res: Response) => {
   app(req, res)
 }
+module.exports.handler = serverless(app)
