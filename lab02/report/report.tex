@@ -1,0 +1,79 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{polski}
+\usepackage{color}
+
+\geometry{margin=1in}
+
+\title{Sprawozdanie z laboratorium 1}
+\author{Mikołaj Kubś 272662}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Cel zadania}
+Celem zadania było zapoznanie się z procesem tworzenia prostych stron Single Page Application (SPA), a także integracją z Azure Static Web i Github Pages. Dodatkowo wykorzystano technikę leniwego ładowania i mechanizm reCAPTCHA.
+
+\subsection{Wprowadzenie}
+Single Page Application (SPA) to rodzaj aplikacji internetowej, w której nawigacja odbywa się poprzez asynchroniczne ładowanie poszczególnych elementów strony, takich jak sekcje lub całe widoki, bez konieczności przeładowywania całej strony. Dzięki temu użytkownik doświadcza płynniejszej interakcji, ponieważ zmiany w interfejsie są natychmiastowe i nie wymagają pełnego odświeżenia przeglądarki.
+
+W aplikacjach SPA cała zawartość jest zazwyczaj ładowana jednorazowo przy pierwszym wejściu na stronę, a późniejsze interakcje z użytkownikiem prowadzą do dynamicznej aktualizacji wyświetlanych danych za pomocą JavaScript. To podejście pozwala na szybsze działanie aplikacji oraz lepsze wykorzystanie zasobów sieciowych, ponieważ jedynie zmieniane elementy są przesyłane między serwerem a klientem.
+
+\section{Wykorzystane technologie}
+\begin{itemize}
+    \item jQuery
+    \item Azure Static Web
+    \item Github Pages
+\end{itemize}
+
+\subsection{Tworzenie aplikacji SPA z wykorzystaniem HTML i JS}
+
+\subsubsection{Kod HTML}
+Plik \texttt{index.html} definiuje prosty kod HTML aplikacji:
+
+
+\subsubsection{Stylizacja CSS}
+Plik \texttt{style.css} definiuje kaskadowe arkusze stylów:
+
+
+\subsubsection{Kod JavaScript}
+Plik \texttt{router.js} zarządza nawigacją w aplikacji SPA:
+
+
+\subsection{Wdrożenie aplikacji w środowisku chmurowym}
+\subsubsection{Azure Static Web Apps}
+Azure Static Web Apps oferuje darmową usługę hostingową dla aplikacji SPA. Kroki wdrożenia:
+\begin{enumerate}
+    \item Zaloguj się na \url{https://portal.azure.com}.
+    \item Utwórz nową aplikację statyczną, podając szczegóły projektu.
+    \item Połącz aplikację z repozytorium GitHub.
+    \item Wdróż aplikację i sprawdź jej działanie.
+\end{enumerate}
+
+\subsubsection{GitHub Pages}
+GitHub Pages umożliwia hostowanie aplikacji SPA. Kroki wdrożenia:
+\begin{enumerate}
+    \item Utwórz repozytorium na GitHubie.
+    \item Skonfiguruj GitHub Pages w ustawieniach repozytorium.
+    \item Sprawdź dostępność aplikacji pod adresem \texttt{https://username.github.io/repository}.
+\end{enumerate}
+
+\subsection{Testowanie aplikacji}
+Przeprowadź testy funkcjonalności aplikacji:
+\begin{itemize}
+    \item Sprawdź nawigację między stronami.
+    \item Zweryfikuj poprawność ładowania obrazów w galerii.
+    \item Przetestuj walidację formularza kontaktowego.
+    \item Użyj narzędzia Lighthouse w ChromeDevTools do analizy wydajności.
+\end{itemize}
+
+\end{document}
