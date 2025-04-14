@@ -1,62 +1,62 @@
-let currentIndex: number = 0
+let currentIndex: number = 0;
 
-function moveGallery (direction: number): void {
-  const gallery = document.querySelector('.gallery') as HTMLElement | null
+function moveGallery(direction: number): void {
+  const gallery = document.querySelector(".gallery") as HTMLElement | null;
   const leftArrow = document.querySelector(
-    '.left-arrow'
-  ) as HTMLButtonElement | null
+    ".left-arrow"
+  ) as HTMLButtonElement | null;
   const rightArrow = document.querySelector(
-    '.right-arrow'
-  ) as HTMLButtonElement | null
+    ".right-arrow"
+  ) as HTMLButtonElement | null;
 
   if (!gallery || !leftArrow || !rightArrow) {
-    console.error('Gallery or arrow elements not found')
-    return
+    console.error("Gallery or arrow elements not found");
+    return;
   }
 
-  const totalItems: number = gallery.children.length
+  const totalItems: number = gallery.children.length;
 
-  let visibleItems: number
+  let visibleItems: number;
   if (window.innerWidth <= 768) {
-    visibleItems = 1
+    visibleItems = 1;
   } else {
-    visibleItems = 2
+    visibleItems = 2;
   }
 
   if (totalItems <= visibleItems) {
-    leftArrow.style.display = 'none'
-    rightArrow.style.display = 'none'
-    gallery.style.transform = 'translateX(0%)' // Ensure it's reset if previously scrolled
-    return
+    leftArrow.style.display = "none";
+    rightArrow.style.display = "none";
+    gallery.style.transform = "translateX(0%)"; // Ensure it's reset if previously scrolled
+    return;
   } else {
-    leftArrow.style.display = 'block'
-    rightArrow.style.display = 'block'
+    leftArrow.style.display = "block";
+    rightArrow.style.display = "block";
   }
 
-  const maxIndex: number = Math.max(0, totalItems - visibleItems)
+  const maxIndex: number = Math.max(0, totalItems - visibleItems);
 
-  currentIndex += direction
+  currentIndex += direction;
 
   if (currentIndex < 0) {
-    currentIndex = 0
+    currentIndex = 0;
   } else if (currentIndex > maxIndex) {
-    currentIndex = maxIndex
+    currentIndex = maxIndex;
   }
 
-  const itemWidthPercent: number = 100 / visibleItems
-  const offset: number = -(currentIndex * itemWidthPercent)
+  const itemWidthPercent: number = 100 / visibleItems;
+  const offset: number = -(currentIndex * itemWidthPercent);
 
-  gallery.style.transform = `translateX(${offset}%)`
+  gallery.style.transform = `translateX(${offset}%)`;
 
-  leftArrow.disabled = currentIndex === 0
-  rightArrow.disabled = currentIndex === maxIndex
+  leftArrow.disabled = currentIndex === 0;
+  rightArrow.disabled = currentIndex === maxIndex;
 }
 
-window.addEventListener('resize', () => {
-  currentIndex = 0
-  moveGallery(0)
-})
+window.addEventListener("resize", () => {
+  currentIndex = 0;
+  moveGallery(0);
+});
 
-document.addEventListener('DOMContentLoaded', () => {
-  moveGallery(0)
-})
+document.addEventListener("DOMContentLoaded", () => {
+  moveGallery(0);
+});

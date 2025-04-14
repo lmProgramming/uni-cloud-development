@@ -19,7 +19,7 @@ npm run build
 ### Running
 
 ```sh
-npm run offline
+npm start
 ```
 
 ### Docker Build

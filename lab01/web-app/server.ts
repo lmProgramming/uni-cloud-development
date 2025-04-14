@@ -1,70 +1,69 @@
-import express, { Request, Response, NextFunction } from 'express'
-import path from 'path'
-import morgan from 'morgan'
-import bodyParser from 'body-parser'
-import serverless from 'serverless-http'
-import { Context } from 'vm'
+import express, { Request, Response, NextFunction } from "express";
+import path from "path";
+import morgan from "morgan";
+import bodyParser from "body-parser";
+import serverless from "serverless-http";
 
-const app = express()
+const app = express();
 
 // Middleware
-app.use(morgan('dev'))
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(morgan("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Set EJS as the view engine
-app.set('view engine', 'ejs')
-app.set('views', path.join(__dirname, '../views'))
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "../views"));
 
 // Routes
-app.get('/', (req: Request, res: Response) => {
-  res.render('index', { title: 'Mikołaj Kubś Portfolio' })
-})
+app.get("/", (req: Request, res: Response) => {
+  res.render("index", { title: "Mikołaj Kubś Portfolio" });
+});
 
-app.post('/', (req: Request, res: Response) => {
-  res.send('Got a POST request')
-})
+app.post("/", (req: Request, res: Response) => {
+  res.send("Got a POST request");
+});
 
-app.put('/user', (req: Request, res: Response) => {
-  res.send('Got a PUT request at /user')
-})
+app.put("/user", (req: Request, res: Response) => {
+  res.send("Got a PUT request at /user");
+});
 
-app.delete('/user', (req: Request, res: Response) => {
-  res.send('Got a DELETE request at /user')
-})
+app.delete("/user", (req: Request, res: Response) => {
+  res.send("Got a DELETE request at /user");
+});
 
-app.get('/contact', (req: Request, res: Response) => {
-  res.render('contact', { title: 'Contact' })
-})
+app.get("/contact", (req: Request, res: Response) => {
+  res.render("contact", { title: "Contact" });
+});
 
-app.post('/submit-form', (req, res) => {
-  res.render('contact-submitted', { title: 'Form submitted' })
-})
+app.post("/submit-form", (req, res) => {
+  res.render("contact-submitted", { title: "Form submitted" });
+});
 
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Error handling
 app.use((req: Request, res: Response, next: NextFunction) => {
-  res.status(404).render('404', { title: 'Nie znaleziono' })
-})
+  res.status(404).render("404", { title: "Could not find" });
+});
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack)
-  res.status(500).render('error', { title: 'Błąd serwera' })
-})
+  console.error(err.stack);
+  res.status(500).render("error", { title: "Server error" });
+});
 
 // Final initialization
 const binaryMimeTypes = [
-  'image/png',
-  'image/jpeg',
-  'image/svg+xml',
-  'image/*',
-  '*/*'
-]
+  "image/png",
+  "image/jpeg",
+  "image/svg+xml",
+  "image/*",
+  "*/*",
+];
 
 module.exports = (req: Request, res: Response) => {
-  app(req, res)
-}
-module.exports.handler = serverless(app)
+  app(req, res);
+};
+module.exports.handler = serverless(app);
