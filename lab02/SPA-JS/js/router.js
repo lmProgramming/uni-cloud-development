@@ -33,6 +33,7 @@ document.querySelector('#contact-link').addEventListener('click', (event) => {
 
 function RenderGalleryPage() {
     document.querySelector('main').innerHTML = `
+        <h1 class="title">Gallery</h1>        
         <br />
         <br />
         <br />
@@ -47,69 +48,105 @@ function RenderGalleryPage() {
         <br />
         <br />
         <br />
-        <br />       
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />        
         <br />
         <br />
         <br />
         <br />
         <br />
         <br />
-        <h1 class="title">Gallery</h1>
+        <br />
+        <br />
+        <br />
+        <br />
         <div class="grid3x3" id="gallery-container"></div>
         <div id="modal" class="modal hidden">
-            <span id="close-modal" class="close">&times;</span>
+            <span id="close-modal" class="close">&#10005;</span>
             <img id="modal-image" class="modal-content" />
         </div>
     `;
 
     const galleryContainer = document.getElementById('gallery-container');
-    const images = Array.from({ length: 9 }, (_, i) => `images/${i + 1}.png`);
+    const imageBasePaths = Array.from({ length: 9 }, (_, i) => `images/${i + 1}.png`);
 
-    images.forEach((src, index) => {
+    imageBasePaths.forEach((srcPath, index) => {
         const img = document.createElement('img');
-        img.dataset.src = src;
-        img.alt = `Image ${index + 1}`;
+        img.dataset.srcPath = srcPath;
+        img.alt = `Image ${index + 1} (loading...)`;
         img.classList.add('thumbnail');
         galleryContainer.appendChild(img);
     });
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px 0px 100px 0px',
+        threshold: 0.01
+    };
+
+    const observer = new IntersectionObserver(async (entries, obs) => {
+        for (const entry of entries) {
             if (entry.isIntersecting) {
                 const img = entry.target;
-                img.src = img.dataset.src;
-                img.onload = () => img.classList.add('loaded');
-                observer.unobserve(img);
-            }
-        });
-    });
+                const imagePath = img.dataset.srcPath;
 
-    document.querySelectorAll('.thumbnail').forEach((img) => observer.observe(img));
+                obs.unobserve(img);
+
+                try {
+                    const response = await fetch(imagePath);
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status} for ${imagePath}`);
+                    }
+
+                    const imageBlob = await response.blob();
+                    const objectURL = URL.createObjectURL(imageBlob);
+
+                    img.src = objectURL;
+
+                    img.onload = () => {
+                        img.classList.add('loaded');
+                        img.alt = `Image ${parseInt(img.alt.match(/\d+/)[0])}`;
+                        URL.revokeObjectURL(objectURL);
+                    };
+
+                    img.onerror = () => {
+                        img.alt = `Image ${parseInt(img.alt.match(/\d+/)[0])} (load error)`;
+                        URL.revokeObjectURL(objectURL);
+                    };
+
+                } catch (error) {
+                    img.alt = `Image ${parseInt(img.alt.match(/\d+/)[0])} (fetch error)`;
+                }
+            }
+        }
+    }, observerOptions);
+
+    document.querySelectorAll('.thumbnail[data-src-path]').forEach((img) => {
+        observer.observe(img);
+    });
 
     const modal = document.getElementById('modal');
     const modalImage = document.getElementById('modal-image');
     const closeModal = document.getElementById('close-modal');
 
-    galleryContainer.addEventListener('click', (event) => {
-        if (event.target.tagName === 'IMG') {
-            modalImage.src = event.target.src;
+    galleryContainer.addEventListener('click', async (event) => {
+        console.log('Gallery image clicked:', event.target);
+        if (event.target.tagName === 'IMG' && event.target.classList.contains('loaded')) {
+            console.log('Image loaded:', event.target.dataset.srcPath);
+
+            modalImage.src = event.target.dataset.srcPath;
             modal.classList.remove('hidden');
         }
     });
 
     closeModal.addEventListener('click', () => {
         modal.classList.add('hidden');
+        modalImage.src = "";
     });
 
     modal.addEventListener('click', (event) => {
         if (event.target === modal) {
             modal.classList.add('hidden');
+            modalImage.src = "";
         }
     });
 }
