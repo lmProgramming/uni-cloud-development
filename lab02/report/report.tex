@@ -40,14 +40,62 @@ W aplikacjach SPA cała zawartość jest zazwyczaj ładowana jednorazowo przy pi
 \subsubsection{Kod HTML}
 Plik \texttt{index.html} definiuje prosty kod HTML aplikacji:
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/index_html.png}
+    \caption{Kod index.html}
+\end{figure}
 
 \subsubsection{Stylizacja CSS}
 Plik \texttt{style.css} definiuje kaskadowe arkusze stylów:
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/css.png}
+    \caption{Fragment kodu style.css}
+\end{figure}
 
 \subsubsection{Kod JavaScript}
 Plik \texttt{router.js} zarządza nawigacją w aplikacji SPA:
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/js.png}
+    \caption{Fragment kodu router.js}
+\end{figure}
+
+\subsubsection{Leniwe ładowanie}
+
+Do implementacji leniwego ładowania obrazków wykorzystano Intersection Observer API. Obrazki są tworzone dynamicznie, a atrybut \texttt{src} jest przypisany dopiero, gdy obrazki powinny być widoczne.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/lazy.png}
+    \caption{Fragment kodu odpowiedzialnego za leniwe ładowanie}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/gallery.png}
+    \caption{Galeria w aplikacji}
+    \label{fig:gallery}
+\end{figure}
+
+\subsubsection{Implementacja reCAPTCHA}
+
+Należało przypisać domenę w systemie reCAPTCHA Google. Grecaptcha renderuje widget Google, a w form jej wysłanie jest przechwycone i sprawdzone, czy grecaptcha nie zwraca błędu.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/recaptcha.png}
+    \caption{Fragment kodu odpowiedzialnego za mechanizm reCAPTCHA}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/contact.png}
+    \caption{Strona kontakt w aplikacji}
+\end{figure}
 
 \subsection{Wdrożenie aplikacji w środowisku chmurowym}
 \subsubsection{Azure Static Web Apps}
@@ -59,6 +107,8 @@ Azure Static Web Apps oferuje darmową usługę hostingową dla aplikacji SPA. K
     \item Wdróż aplikację i sprawdź jej działanie.
 \end{enumerate}
 
+Wdrożenie aplikacji zadziałało bezproblemowo. Po zcommitowaniu kodu na GitHub i poczekaniu, aż Azure to przetworzy, zmieni się hostowana wersja aplikacji.
+
 \subsubsection{GitHub Pages}
 GitHub Pages umożliwia hostowanie aplikacji SPA. Kroki wdrożenia:
 \begin{enumerate}
@@ -67,13 +117,65 @@ GitHub Pages umożliwia hostowanie aplikacji SPA. Kroki wdrożenia:
     \item Sprawdź dostępność aplikacji pod adresem \texttt{https://username.github.io/repository}.
 \end{enumerate}
 
+Różne pliki były hostowane na \texttt{https://github.com/lmProgramming/lmProgramming.github.io} od dawna - głównie informacji dla botów reklamowych Google'a oraz polityki prywatności gier autora. Dodanie nowej struktury strony przebiegło bezproblemowo.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/github.png}
+    \caption{Udany deployment na Github pages.}
+\end{figure}
+
 \subsection{Testowanie aplikacji}
-Przeprowadź testy funkcjonalności aplikacji:
+Przeprowadzone testy aplikacji:
 \begin{itemize}
     \item Sprawdź nawigację między stronami.
     \item Zweryfikuj poprawność ładowania obrazów w galerii.
     \item Przetestuj walidację formularza kontaktowego.
     \item Użyj narzędzia Lighthouse w ChromeDevTools do analizy wydajności.
 \end{itemize}
+
+\subsubsection{Nawigacja}
+
+Nawigacja działa bezproblemowo, wszystkie stany są zapisane w historii. Nawigacja jest praktycznie natychmiastowa.
+
+\subsubsection{Leniwe ładowanie}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/lazy_2.png}
+    \caption{Tylko 3 z 9 obrazków załadowana, co oznacza, że leniwe ładowanie działa.}
+\end{figure}
+
+\subsubsection{ReCAPTCHA}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/contact_success.png}
+    \caption{Sukces wysłania formularza z reCAPTCHA.}
+\end{figure}
+
+Przez test aplikacji na innej domenie, mechanizm reCAPTCHA nie może działać - wysłanie formularza nie uda się.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/contact_failure.png}
+    \caption{Nieudane wysłanie formularza z reCAPTCHA.}
+\end{figure}
+
+\subsubsection{Lighthouse}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/lighthouse.png}
+    \caption{Wynik analizy Lighthouse.}
+\end{figure}
+
+Wynik analizy performance to aż 98/100, co oznacza wynik bardzo dobry, nie ma potrzeby go polepszać.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/lighthouse_details.png}
+    \caption{Szczegóły analizy Lighthouse.}
+\end{figure}
 
 \end{document}
