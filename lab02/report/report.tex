@@ -39,7 +39,7 @@ Plik \texttt{index.html} definiuje prosty kod HTML aplikacji:
     \caption{Kod index.html}
 \end{figure}
 
-Kod ten jest podmieniany przez \texttt{router.js}.
+Kod wewnątrz <main> jest podmieniany przez \texttt{router.js}.
 
 \subsubsection{Stylizacja CSS}
 Plik \texttt{style.css} definiuje kaskadowe arkusze stylów:
@@ -61,7 +61,7 @@ Plik \texttt{router.js} zarządza nawigacją w aplikacji SPA:
 
 \subsubsection{Leniwe ładowanie}
 
-Do implementacji leniwego ładowania obrazków wykorzystano Intersection Observer API. Obrazki są tworzone dynamicznie, a atrybut \texttt{src} jest przypisany dopiero, gdy obrazki powinny być widoczne.
+Do implementacji leniwego ładowania obrazków wykorzystano Intersection Observer API. Obrazki są tworzone dynamicznie, a atrybut \texttt{src} jest przypisany dopiero, gdy obrazki powinny być widoczne. Obrazki są ładowane jako Blob.
 
 \begin{figure}[H]
     \centering
@@ -73,7 +73,12 @@ Do implementacji leniwego ładowania obrazków wykorzystano Intersection Observe
     \centering
     \includegraphics[width=1\textwidth]{images/gallery.png}
     \caption{Galeria w aplikacji}
-    \label{fig:gallery}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/modal.png}
+    \caption{Modalne okno obrazka}
 \end{figure}
 
 \subsubsection{Implementacja reCAPTCHA}
@@ -159,6 +164,8 @@ Przez test aplikacji na innej domenie, mechanizm reCAPTCHA nie może działać -
 
 \subsubsection{Lighthouse}
 
+Lighthouse pomaga mierzyć i diagnozować problemy z wydajnością ładowania, interaktywnością (TBT), dostępnością (ważne dla wszystkich użytkowników), SEO (kluczowe dla SPA) i ogólnymi dobrymi praktykami webowymi.
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{images/lighthouse.png}
@@ -180,5 +187,15 @@ Wynik analizy performance to aż 98/100, co oznacza wynik bardzo dobry, nie ma p
     \includegraphics[width=1\textwidth]{images/edge.png}
     \caption{Poprawne wyświetlanie strony w przeglądarce Edge, symulując wymiary telefonu}
 \end{figure}
+
+\section{Wyzwania związane z SPA}
+
+\begin{itemize}
+    \item Routing po stronie klienta
+    \item Problemy z zarządzaniem stanu aplikacji
+    \item Optymalizacja pierwszego załadowania strony (skoro wymaga pobrania większej liczby stron na początku)
+    \item Zwłaszcza kiedyś występowały problemy z SEO i SPA, teraz ten problem jest mniejszy dzięki lepszym robotom Google
+    \item Bezpieczeństwo - większa ilość logiki po stronie klienta otwiera nowe możliwości ataku
+\end{itemize}
 
 \end{document}
