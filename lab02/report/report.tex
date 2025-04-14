@@ -28,13 +28,6 @@ Single Page Application (SPA) to rodzaj aplikacji internetowej, w której nawiga
 
 W aplikacjach SPA cała zawartość jest zazwyczaj ładowana jednorazowo przy pierwszym wejściu na stronę, a późniejsze interakcje z użytkownikiem prowadzą do dynamicznej aktualizacji wyświetlanych danych za pomocą JavaScript. To podejście pozwala na szybsze działanie aplikacji oraz lepsze wykorzystanie zasobów sieciowych, ponieważ jedynie zmieniane elementy są przesyłane między serwerem a klientem.
 
-\section{Wykorzystane technologie}
-\begin{itemize}
-    \item jQuery
-    \item Azure Static Web
-    \item Github Pages
-\end{itemize}
-
 \subsection{Tworzenie aplikacji SPA z wykorzystaniem HTML i JS}
 
 \subsubsection{Kod HTML}
@@ -45,6 +38,8 @@ Plik \texttt{index.html} definiuje prosty kod HTML aplikacji:
     \includegraphics[width=1\textwidth]{images/index_html.png}
     \caption{Kod index.html}
 \end{figure}
+
+Kod ten jest podmieniany przez \texttt{router.js}.
 
 \subsubsection{Stylizacja CSS}
 Plik \texttt{style.css} definiuje kaskadowe arkusze stylów:
@@ -176,6 +171,14 @@ Wynik analizy performance to aż 98/100, co oznacza wynik bardzo dobry, nie ma p
     \centering
     \includegraphics[width=1\textwidth]{images/lighthouse_details.png}
     \caption{Szczegóły analizy Lighthouse.}
+\end{figure}
+
+\subsubsection{Inna przeglądarka i rozdzielczość}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/edge.png}
+    \caption{Poprawne wyświetlanie strony w przeglądarce Edge, symulując wymiary telefonu}
 \end{figure}
 
 \end{document}
