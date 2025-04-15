@@ -6,6 +6,10 @@
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#db4938",
+  "scripts": {
+    "build": "tsc --declaration && npm run minify",
+    "minify": "jsmin -o name.min.js name.js"
+  },
   "icons": [
     {
       "src": "images/pwa-icon-128.png",
@@ -35,5 +39,8 @@
   ],
   "devDependencies": {
     "@types/serviceworker": "^0.0.128"
+  },
+  "dependencies": {
+    "jsmin": "^1.0.1"
   }
 }
