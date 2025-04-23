@@ -4,3 +4,6 @@
 [submodule "lab02/lmProgramming.github.io"]
 	path = lab02/lmProgramming.github.io
 	url = https://github.com/lmProgramming/lmProgramming.github.io
+[submodule "lab03/pwa-js"]
+	path = lab03/pwa-js
+	url = https://github.com/lmProgramming/pwa-js
