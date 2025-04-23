@@ -7,7 +7,7 @@
   "background_color": "#ffffff",
   "theme_color": "#db4938",
   "scripts": {
-    "build": "tsc --declaration && npm run minify",
+    "build": "npm run minify",
     "minify": "jsmin -o name.min.js name.js"
   },
   "icons": [
