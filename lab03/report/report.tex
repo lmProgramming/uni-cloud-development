@@ -33,7 +33,7 @@ desktopowa).
 \subsection{Tworzenie aplikacja PWA z wykorzystaniem HTML, JS i CSS}
 
 \subsubsection{Kod HTML}
-Plik \texttt{index.html} definiuje prosty kod HTML aplikacji:
+Plik \texttt{index.html} definiuje prosty kod HTML aplikacji wraz z ikonami dla PWA i innymi informacjami:
 
 \begin{figure}[H]
     \centering
@@ -51,12 +51,51 @@ Plik \texttt{style.css} definiuje kaskadowe arkusze stylów:
 \end{figure}
 
 \subsubsection{Kod JavaScript}
-Plik \texttt{router.js} zarządza nawigacją w aplikacji SPA:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{images/js.png}
-    \caption{Fragment kodu router.js}
+    \includegraphics[width=1\textwidth]{images/main_js.png}
+    \caption{Fragment kodu main.js}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/sw_js.png}
+    \caption{Fragment kodu sw.js - service worker}
+\end{figure}
+
+\subsection{Dalsza implementacja}
+
+Dzięki wykorzystaniu kodu w instrukcji implementacja przebiegła bez większych problemów. Najwięcej problemów wynikło ze ścieżek, gdyż publikując stronę w GitHub Pages okazuje się, że jest głębiej w folderze.
+
+Do ikon wykorzystano oba podane narzędzia: \href{https://www.npmjs.com/package/pwa-asset-generator}{pwa-asset-generator} i \href{https://realfavicongenerator.net/}{RealFaviconGenerator}.
+
+Rozbudowano stronę, dodając zdjęcia psów i podstronę ze zdjęciami kotów.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/lighthouse.png}
+    \caption{Wynik analizy Lighthouse}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/splash.jpg}
+    \caption{Splash image}
+\end{figure}
+
+Service worker działa jak należy, cache'ując odpowiednie pliki. Po pobraniu aplikacji na telefon splash image się pokazuje.
+
+Wdrożono aplikację w GitHub pages, co, jak wyżej wspomniano, wymagało naprawy ścieżek.
+
+\subsection{Powiadomienia}
+
+Sprawiły one najwięcej problemów implementacyjnych. Stworzono projekt w Firebase i skrypt \texttt{firebase-messaging-sw.js}. Po poprawie ścieżek w końcu zadziałało i dzięki wydrukowaniu tokenu FCM można było wysłać testową wiadomość z konsole Firebase.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/notification.png}
+    \caption{Powiadomienie}
 \end{figure}
 
 \end{document}
