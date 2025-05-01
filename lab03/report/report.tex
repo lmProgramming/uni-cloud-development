@@ -1,0 +1,101 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{geometry}
+\usepackage{polski}
+\usepackage{color}
+
+\geometry{margin=1in}
+
+\title{Sprawozdanie z laboratorium 3}
+\author{Mikołaj Kubś 272662}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Cel zadania}
+
+Celem zadania jest stworzenie prostej aplikacja PWA z wykorzystaniem HTML, CSS i JS. Kolejnym krokiem był deployment i testy funkcjonalności.
+
+\subsection{Wprowadzenie}
+
+Progressive Web App to aplikacja internetowa uruchamiana tak jak zwykła strona internetowa, ale
+umożliwiająca stworzenie wrażenia działania jak natywna aplikacja mobilna (lub aplikacja
+desktopowa).
+
+\subsection{Tworzenie aplikacja PWA z wykorzystaniem HTML, JS i CSS}
+
+\subsubsection{Kod HTML}
+Plik \texttt{index.html} definiuje prosty kod HTML aplikacji wraz z ikonami dla PWA i innymi informacjami:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/index_html.png}
+    \caption{Kod index.html}
+\end{figure}
+
+\subsubsection{Stylizacja CSS}
+Plik \texttt{style.css} definiuje kaskadowe arkusze stylów:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/css.png}
+    \caption{Fragment kodu style.css}
+\end{figure}
+
+\subsubsection{Kod JavaScript}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/main_js.png}
+    \caption{Fragment kodu main.js}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/sw_js.png}
+    \caption{Fragment kodu sw.js - service worker}
+\end{figure}
+
+\subsection{Dalsza implementacja}
+
+Dzięki wykorzystaniu kodu w instrukcji implementacja przebiegła bez większych problemów. Najwięcej problemów wynikło ze ścieżek, gdyż publikując stronę w GitHub Pages okazuje się, że jest głębiej w folderze.
+
+Do ikon wykorzystano oba podane narzędzia: \href{https://www.npmjs.com/package/pwa-asset-generator}{pwa-asset-generator} i \href{https://realfavicongenerator.net/}{RealFaviconGenerator}.
+
+Rozbudowano stronę, dodając zdjęcia psów i podstronę ze zdjęciami kotów.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/lighthouse.png}
+    \caption{Wynik analizy Lighthouse}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/splash.jpg}
+    \caption{Splash image}
+\end{figure}
+
+Service worker działa jak należy, cache'ując odpowiednie pliki. Po pobraniu aplikacji na telefon splash image się pokazuje.
+
+Wdrożono aplikację w GitHub pages, co, jak wyżej wspomniano, wymagało naprawy ścieżek.
+
+\subsection{Powiadomienia}
+
+Sprawiły one najwięcej problemów implementacyjnych. Stworzono projekt w Firebase i skrypt \texttt{firebase-messaging-sw.js}. Po poprawie ścieżek w końcu zadziałało i dzięki wydrukowaniu tokenu FCM można było wysłać testową wiadomość z konsole Firebase.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{images/notification.png}
+    \caption{Powiadomienie}
+\end{figure}
+
+\end{document}
