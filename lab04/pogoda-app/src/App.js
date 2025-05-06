@@ -1,5 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import { WiDaySunny, WiRain, WiSnow, WiCloudy, WiThunderstorm, WiFog } from 'react-icons/wi';
+
+const weatherConditions = {
+  Thunderstorm: {
+    color: '#616161',
+    title: 'Burza',
+    subtitle: 'Uważaj na błyskawice!',
+    icon: <WiThunderstorm size={64} />
+  },
+  Drizzle: {
+    color:
+      '#0044CC', title:
+      'Mżawka', subtitle:
+      'Lekkie opady',
+    icon: <WiRain size={64} />
+  },
+  Rain: {
+    color:
+      '#005BEA', title:
+      'Deszcz', subtitle: 'Weź parasol',
+    icon: < WiRain size={64} />
+  },
+  Snow: {
+    color:
+      '#00d2ff', title:
+      'Śnieg',
+    subtitle: 'Ubierz się ciepło',
+    icon: <WiSnow size={64} />
+  },
+  Clear: {
+    color: '#f7b733',
+    title: 'Słonecznie', subtitle:
+      'Idealna pogoda!',
+    icon: <WiDaySunny size={64} />
+  },
+  Clouds: {
+    color:
+      '#1F1C2C', title:
+      'Pochmurno',
+    subtitle: 'Może przejaśni się później',
+    icon: <WiCloudy size={64} />
+  },
+  Mist: {
+    color:
+      '#3CD3AD',
+    title: 'Mgła',
+    subtitle: 'Uważaj na drodze',
+    icon: <WiFog size={64} />
+  }
+};
 
 const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
 function App() {
@@ -13,15 +63,14 @@ function App() {
     try {
       const response = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${city.trim()}&appid=${apiKey}&units=
-metric&lang=pl`
+  metric&lang=pl`
       );
       if (!response.ok) {
         throw new Error(`Błąd HTTP: ${response.status}`);
       }
       const data = await response.json();
       if (!data || !data.weather || data.weather.length === 0) {
-        alert('Nie udało się pobrać danych pogodowych.');
-        return;
+        alert('Nie udało się pobrać danych pogodowych.'); return;
       }
       setWeatherData(data);
     } catch (error) {
@@ -29,9 +78,13 @@ metric&lang=pl`
       alert(error.message || 'Wystąpił błąd podczas pobierania danych');
     }
   };
+  const condition = weatherData
+    ? weatherConditions[weatherData.weather[0].main] || weatherConditions.Clear :
+    weatherConditions.Clear;
   return (
-    <div className="App">
-      <h1>Prognoza pogody</h1>
+    <div className="App" style={{ backgroundColor: condition.color }}>
+      <h1>{condition.title}</h1>
+      <h2>{condition.subtitle}</h2>
       <input
         type="text"
         value={city}
@@ -42,11 +95,12 @@ metric&lang=pl`
       {weatherData && (
         <div id="weatherInfo">
           <h2>{weatherData.name}, {weatherData.sys.country}</h2>
-          <p>{weatherData.weather[0].description}</p>
+          <p>{condition.icon} {weatherData.weather[0].description}</p>
           <p>Temperatura: {weatherData.main.temp}°C</p>
           <p>Ciśnienie: {weatherData.main.pressure} hPa</p>
           <p>Wilgotność: {weatherData.main.humidity}%</p>
-          <p>Prędkość wiatru: {weatherData.wind.speed} m/s</p> </div>
+          <p>Prędkość wiatru: {weatherData.wind.speed} m/s</p>
+        </div>
       )}
     </div>
   );
