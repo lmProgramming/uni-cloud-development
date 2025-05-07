@@ -55,6 +55,41 @@ const apiKey = process.env.REACT_APP_OPENWEATHERMAP_API_KEY;
 function App() {
   const [city, setCity] = useState('');
   const [weatherData, setWeatherData] = useState(null);
+
+  const getLocationWeather = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+
+          fetch(
+            `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric&lang=pl`
+          )
+            .then((response) => {
+              return response.json();
+            })
+            .then((data) => {
+              setWeatherData(data);
+            })
+            .catch((error) => {
+              console.error('Error fetching weather data:', error);
+            });
+        },
+        (error) => {
+          console.error('Geolocation error:', error);
+          if (error.code === error.PERMISSION_DENIED) {
+            alert('Aby pobrać pogodę dla Twojej lokalizacji, musisz zezwolić na dostęp do lokalizacji.');
+          } else {
+            alert(`Błąd geolokalizacji: ${error.message}`);
+          }
+        }
+      );
+    } else {
+      console.warn('Geolocation is not supported by this browser.');
+      alert('Twoja przeglądarka nie wspiera geolokalizacji');
+    }
+  };
+
   const getWeather = async () => {
     if (!city.trim()) {
       alert('Proszę wpisać nazwę miasta');
@@ -78,9 +113,9 @@ function App() {
       alert(error.message || 'Wystąpił błąd podczas pobierania danych');
     }
   };
-  const condition = weatherData
-    ? weatherConditions[weatherData.weather[0].main] || weatherConditions.Clear :
-    weatherConditions.Clear;
+  const condition = weatherData && weatherData.weather && weatherData.weather[0] && weatherData.country
+    ? weatherConditions[weatherData.weather[0].main] || weatherConditions.Clear
+    : weatherConditions.Clear;
   return (
     <div className="App" style={{ backgroundColor: condition.color }}>
       <h1>{condition.title}</h1>
@@ -92,6 +127,7 @@ function App() {
         placeholder="Wpisz nazwę miasta"
       />
       <button onClick={getWeather}>Sprawdź pogodę</button>
+      <button onClick={getLocationWeather}>Sprawdź pogodę dla Twojej lokalizacji</button>
       {weatherData && (
         <div id="weatherInfo">
           <h2>{weatherData.name}, {weatherData.sys.country}</h2>
