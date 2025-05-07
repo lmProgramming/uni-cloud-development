@@ -131,7 +131,7 @@ function App() {
       {weatherData && (
         <div id="weatherInfo">
           <h2>{weatherData.name}, {weatherData.sys.country}</h2>
-          <p>{condition.icon} {weatherData.weather[0].description}</p>
+          <div>{condition.icon} <p>{weatherData.weather[0].description}</p></div>
           <p>Temperatura: {weatherData.main.temp}°C</p>
           <p>Ciśnienie: {weatherData.main.pressure} hPa</p>
           <p>Wilgotność: {weatherData.main.humidity}%</p>
