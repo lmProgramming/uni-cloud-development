@@ -40,6 +40,10 @@ albums = [{
 }
 ];
 
+function getNextId() {
+    return albums.slice(0).sort(function (a, b) { return b.id - a.id })[0].id;
+}
+
 app.use(express.json());
 
 app.get('/albums', (req, res) => {
@@ -50,20 +54,17 @@ app.get('/', (req, res) => {
     res.redirect('/albums')
 });
 
-// Endpoint do pobierania albumów konkretnego zespołu
 app.get('/albums/:band', (req, res) => {
-    const
-        band = req.params.band.toLowerCase();
+    const band = req.params.band.toLowerCase();
     const filteredAlbums = albums.filter(album => album.band.toLowerCase() === band);
-    if (filteredAlbums.length > 0) {
-        res.json(filteredAlbums);
-    } else {
-        res.status(404).json({
+    if (filteredAlbums.length == 0) {
+        return res.status(204).json({
             message: "Nie znaleziono albumów dla tego zespołu."
         });
     }
+    res.json(filteredAlbums);
 });
-// Endpoint do dodawania nowego albumu
+
 app.post('/albums', (req, res) => {
     const {
         band,
@@ -78,7 +79,7 @@ app.post('/albums', (req, res) => {
         });
     }
     const newAlbum = {
-        id: albums.length + 1,
+        id: getNextId(),
         band,
         title,
         year,
@@ -88,11 +89,13 @@ app.post('/albums', (req, res) => {
     albums.push(newAlbum);
     res.status(201).json(newAlbum);
 });
-// Endpoint do aktualizacji albumu
+
 app.put('/albums/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const {
+        band,
         title,
+        year,
         genre,
         cover
     } = req.body;
@@ -102,12 +105,14 @@ app.put('/albums/:id', (req, res) => {
             message: "Album nie znaleziony."
         });
     }
+    if (band) album.band = band
     if (title) album.title = title;
     if (genre) album.genre = genre;
+    if (year) album.year = year;
     if (cover) album.cover = cover;
     res.json(album);
 });
-// Endpoint do usuwania albumu
+
 app.delete('/albums/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const index = albums.findIndex(album => album.id === id);
