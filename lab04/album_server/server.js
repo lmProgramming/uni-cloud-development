@@ -3,46 +3,57 @@ const cors = require('cors');
 const app = express();
 const port = 3000;
 
+genres = [
+    { id: 1, name: "Heavy Metal" },
+    { id: 2, name: "Light Metal" }
+]
+
 albums = [{
     id: 1,
     band: "Metallica",
     title: "Master of Puppets",
-    year: 1986
+    year: 1986,
+    genre: 1
 },
 {
     id: 2,
     band: "Metallica",
     title: "Ride the Lightning",
-    year: 1984
+    year: 1984,
+    genre: 1
 },
 {
     id: 3,
     band: "AC/DC",
     title: "Back in Black",
-    year: 1980
+    year: 1980,
+    genre: 1
 },
 {
     id: 4,
     band: "AC/DC",
     title: "Highway to Hell",
-    year: 1979
+    year: 1979,
+    genre: 1
 },
 {
     id: 5,
     band: "Iron Maiden",
     title: "The Number of the Beast",
-    year: 1982
+    year: 1982,
+    genre: 1
 },
 {
     id: 6,
     band: "Iron Maiden",
     title: "Powerslave",
-    year: 1984
+    year: 1984,
+    genre: 1
 }
 ];
 
 function getNextId() {
-    return albums.slice(0).sort(function (a, b) { return b.id - a.id })[0].id;
+    return (albums.slice(0).sort(function (a, b) { return b.id - a.id })[0].id) + 1;
 }
 
 app.use(express.json());
@@ -61,13 +72,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/albums/:band', (req, res) => {
-    const band = req.params.band.toLowerCase();
+    const band = decodeURIComponent(req.params.band.toLowerCase());
     const filteredAlbums = albums.filter(album => album.band.toLowerCase() === band);
-    if (filteredAlbums.length == 0) {
-        return res.status(204).json({
-            message: "Nie znaleziono albumów dla tego zespołu."
-        });
-    }
+    filteredAlbums.map(album => ({ ...album, genre: { "id": album.genre, "name": albums.find(a => a.id === album.genre) } }))
     res.json(filteredAlbums);
 });
 
@@ -79,11 +86,19 @@ app.post('/albums', (req, res) => {
         genre,
         cover
     } = req.body;
-    if (!band || !title || !year || !genre || !cover) {
+    if (!band || !title || !year || !genre) {
+        const missingFields = [];
+        if (!band) missingFields.push("band");
+        if (!title) missingFields.push("title");
+        if (!year) missingFields.push("year");
+        if (!genre) missingFields.push("genre");
+        const message = `Missing: ${missingFields.join(" ")}`;
+        console.log(message)
         return res.status(400).json({
-            message: "Brak wymaganych danych."
+            message: message
         });
     }
+    const id = getNextId();
     const newAlbum = {
         id: getNextId(),
         band,
@@ -137,3 +152,5 @@ app.listen(port,
     () => {
         console.log(`Serwer REST API działa na http://localhost:${port}`);
     });
+
+module.exports = app;
