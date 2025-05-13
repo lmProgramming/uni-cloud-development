@@ -1,11 +1,17 @@
-'strict'
-import React, { useState, useEffect } from 'react';
+"strict";
+import React, { useState, useEffect } from "react";
 
 export default function AlbumList() {
   const [albums, setAlbums] = useState([]);
   const [band, setBand] = useState("");
-  const [newAlbum, setNewAlbum] = useState({ band: "", title: "", year: "", genre: "", cover: "" });
-  const [albumEdited, setAlbumEdited] = useState(null)
+  const [newAlbum, setNewAlbum] = useState({
+    band: "",
+    title: "",
+    year: "",
+    genre: "",
+    cover: "",
+  });
+  const [albumEdited, setAlbumEdited] = useState(null);
 
   useEffect(() => {
     const storedAlbums = localStorage.getItem("albums");
@@ -13,12 +19,12 @@ export default function AlbumList() {
       setAlbums(JSON.parse(storedAlbums));
     } else {
       fetch("http://localhost:3000/albums")
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
           setAlbums(data);
           localStorage.setItem("albums", JSON.stringify(data));
         })
-        .catch(error => console.error("Błąd pobierania danych:", error));
+        .catch((error) => console.error("Błąd pobierania danych:", error));
     }
   }, []);
 
@@ -28,52 +34,55 @@ export default function AlbumList() {
   };
 
   const fetchBandAlbums = () => {
-    const bandEncoded = encodeURIComponent(band)
+    const bandEncoded = encodeURIComponent(band);
     fetch(`http://localhost:3000/albums/${bandEncoded}`)
-      .then(response => response.json())
-      .then(data => updateLocalStorage(data))
-      .catch(error => console.error("Błąd pobierania danych:", error));
+      .then((response) => response.json())
+      .then((data) => updateLocalStorage(data))
+      .catch((error) => console.error("Błąd pobierania danych:", error));
   };
 
   const addAlbum = () => {
     fetch("http://localhost:3000/albums", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newAlbum)
+      body: JSON.stringify(newAlbum),
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
-          throw new Error("Error response from server")
-        } else { return response.json() }
+          throw new Error("Error response from server");
+        } else {
+          return response.json();
+        }
       })
-      .then(data => updateLocalStorage([...albums, data]))
-      .catch(error => console.error("Błąd dodawania albumu:", error));
+      .then((data) => updateLocalStorage([...albums, data]))
+      .catch((error) => console.error("Błąd dodawania albumu:", error));
   };
 
   const updateAlbum = (id, newTitle) => {
     fetch(`http://localhost:3000/albums/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title: newTitle })
+      body: JSON.stringify({ title: newTitle }),
     })
-      .then(response => response.json())
+      .then((response) => response.json())
       .then(() => {
-        const updatedAlbums = albums.map(album => album.id === id ? { ...album, title: newTitle }
-          : album);
+        const updatedAlbums = albums.map((album) =>
+          album.id === id ? { ...album, title: newTitle } : album
+        );
         updateLocalStorage(updatedAlbums);
       })
-      .catch(error => console.error("Błąd aktualizacji albumu:", error));
+      .catch((error) => console.error("Błąd aktualizacji albumu:", error));
   };
 
   const deleteAlbum = (id) => {
     fetch(`http://localhost:3000/albums/${id}`, {
-      method: "DELETE"
+      method: "DELETE",
     })
       .then(() => {
-        const updatedAlbums = albums.filter(album => album.id !== id);
+        const updatedAlbums = albums.filter((album) => album.id !== id);
         updateLocalStorage(updatedAlbums);
       })
-      .catch(error => console.error("Błąd usuwania albumu:", error));
+      .catch((error) => console.error("Błąd usuwania albumu:", error));
   };
 
   return (
@@ -95,35 +104,77 @@ export default function AlbumList() {
         </button>
       </div>
       <div className="mb-4">
-        <input type="text" placeholder="Band" value={newAlbum.band} onChange={(e) =>
-          setNewAlbum({ ...newAlbum, band: e.target.value })} className="border p-2 rounded w-full mb-2"
+        <input
+          type="text"
+          placeholder="Band"
+          value={newAlbum.band}
+          onChange={(e) => setNewAlbum({ ...newAlbum, band: e.target.value })}
+          className="border p-2 rounded w-full mb-2"
         />
-        <input type="text" placeholder="Title" value={newAlbum.title} onChange={(e) =>
-          setNewAlbum({ ...newAlbum, title: e.target.value })} className="border p-2 rounded w-full mb2"
+        <input
+          type="text"
+          placeholder="Title"
+          value={newAlbum.title}
+          onChange={(e) => setNewAlbum({ ...newAlbum, title: e.target.value })}
+          className="border p-2 rounded w-full mb2"
         />
-        <input type="number" placeholder="Year" value={newAlbum.year} onChange={(e) =>
-          setNewAlbum({ ...newAlbum, year: e.target.value })} className="border p-2 rounded w-full mb-2"
+        <input
+          type="number"
+          placeholder="Year"
+          value={newAlbum.year}
+          onChange={(e) => setNewAlbum({ ...newAlbum, year: e.target.value })}
+          className="border p-2 rounded w-full mb-2"
         />
-        <input type="text" placeholder="Genre" value={newAlbum.genre} onChange={(e) =>
-          setNewAlbum({ ...newAlbum, genre: e.target.value })} className="border p-2 rounded w-full mb-2"
+        <input
+          type="text"
+          placeholder="Genre"
+          value={newAlbum.genre}
+          onChange={(e) => setNewAlbum({ ...newAlbum, genre: e.target.value })}
+          className="border p-2 rounded w-full mb-2"
         />
-        <input type="file" placeholder="Cover" value={newAlbum.cover} onChange={(e) =>
-          setNewAlbum({ ...newAlbum, cover: e.target.value })} className="border p-2 rounded w-full mb-2" accept="image/png, image/jpeg"
+        <input
+          type="file"
+          placeholder="Cover"
+          value={newAlbum.cover}
+          onChange={(e) => setNewAlbum({ ...newAlbum, cover: e.target.value })}
+          className="border p-2 rounded w-full mb-2"
+          accept="image/png, image/jpeg"
         />
-        <button onClick={addAlbum} className="bg-green-500 text-white px-4
-py-2 rounded">Dodaj Album</button>
+        <button
+          onClick={addAlbum}
+          className="bg-green-500 text-white px-4
+py-2 rounded"
+        >
+          Dodaj Album
+        </button>
       </div>
       <ul>
-        {albums.map(album => (
-          <li key={album.id} className="border-b py-2 flex justify-between items-center">
+        {albums.map((album) => (
+          <li
+            key={album.id}
+            className="border-b py-2 flex justify-between items-center"
+          >
             <span>
-              <strong>{album.id} {album.band}</strong> - {album.title} ({album.year})
+              <strong>
+                {album.id} {album.band}
+              </strong>{" "}
+              - {album.title} ({album.year})
             </span>
             <div>
-              <button onClick={() => updateAlbum(album.id)} className="bg-yellow-500
-textwhite px-2 py-1 rounded mr-2">Edytuj</button>
-              <button onClick={() => deleteAlbum(album.id)} className="bg-red-500 textwhite px-
-2 py-1 rounded">Usuń</button>
+              <button
+                onClick={() => updateAlbum(album.id)}
+                className="bg-yellow-500
+textwhite px-2 py-1 rounded mr-2"
+              >
+                Edytuj
+              </button>
+              <button
+                onClick={() => deleteAlbum(album.id)}
+                className="bg-red-500 textwhite px-
+2 py-1 rounded"
+              >
+                Usuń
+              </button>
             </div>
           </li>
         ))}
