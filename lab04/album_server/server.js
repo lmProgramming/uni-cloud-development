@@ -3,6 +3,40 @@ const cors = require("cors");
 const app = express();
 const port = 3000;
 
+const multer = require("multer");
+const path = require("path");
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    const fileTypes = /jpeg|jpg|png/;
+    const extname = fileTypes.test(
+      path.extname(file.originalname).toLowerCase()
+    );
+    const mimetype = fileTypes.test(file.mimetype);
+
+    if (extname && mimetype) {
+      cb(null, true);
+    } else {
+      cb(new Error("Only images are allowed (jpeg, jpg, png)"));
+    }
+  },
+});
+
+const fs = require("fs");
+if (!fs.existsSync("uploads")) {
+  fs.mkdirSync("uploads");
+}
+
 genres = [
   { id: 1, name: "Heavy Metal" },
   { id: 2, name: "Light Metal" },
@@ -15,6 +49,7 @@ albums = [
     title: "Master of Puppets",
     year: 1986,
     genre: 1,
+    cover: "/uploads/master_of_puppets.jpg",
   },
   {
     id: 2,
@@ -22,6 +57,7 @@ albums = [
     title: "Ride the Lightning",
     year: 1984,
     genre: 1,
+    cover: "/uploads/Ride_the_Lightning.jpg",
   },
   {
     id: 3,
@@ -29,6 +65,7 @@ albums = [
     title: "Back in Black",
     year: 1980,
     genre: 1,
+    cover: "/uploads/Back_in_Black.png",
   },
   {
     id: 4,
@@ -36,6 +73,7 @@ albums = [
     title: "Highway to Hell",
     year: 1979,
     genre: 1,
+    cover: "/uploads/Highway_to_Hell.jpg",
   },
   {
     id: 5,
@@ -43,6 +81,7 @@ albums = [
     title: "The Number of the Beast",
     year: 1982,
     genre: 1,
+    cover: "/uploads/The_Number_of_the_Beast.jpg",
   },
   {
     id: 6,
@@ -50,6 +89,7 @@ albums = [
     title: "Powerslave",
     year: 1984,
     genre: 1,
+    cover: "/uploads/Powerslave.jpg",
   },
 ];
 
@@ -90,8 +130,10 @@ app.get("/albums/:band", (req, res) => {
   res.json(filteredAlbums);
 });
 
-app.post("/albums", (req, res) => {
-  const { band, title, year, genre, cover } = req.body;
+app.post("/albums", upload.single("cover"), (req, res) => {
+  const { band, title, year, genre } = req.body;
+  const cover = req.file ? `/uploads/${req.file.filename}` : null;
+
   if (!band || !title || !year || !genre) {
     const missingFields = [];
     if (!band) missingFields.push("band");
@@ -104,9 +146,10 @@ app.post("/albums", (req, res) => {
       message: message,
     });
   }
+
   const id = getNextId();
   const newAlbum = {
-    id: getNextId(),
+    id,
     band,
     title,
     year,
@@ -148,6 +191,7 @@ app.delete("/albums/:id", (req, res) => {
   });
 });
 
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.listen(port, () => {
   console.log(`Serwer REST API działa na http://localhost:${port}`);
 });

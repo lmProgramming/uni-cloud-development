@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 
 export default function AlbumList() {
+  const apiURL = "http://localhost:3000";
+
   const [albums, setAlbums] = useState([]);
   const [band, setBand] = useState("");
   const [newAlbum, setNewAlbum] = useState({
@@ -42,17 +44,24 @@ export default function AlbumList() {
   };
 
   const addAlbum = () => {
+    const formData = new FormData();
+    formData.append("band", newAlbum.band);
+    formData.append("title", newAlbum.title);
+    formData.append("year", newAlbum.year);
+    formData.append("genre", newAlbum.genre);
+    if (newAlbum.cover) {
+      formData.append("cover", newAlbum.cover);
+    }
+
     fetch("http://localhost:3000/albums", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newAlbum),
+      body: formData,
     })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Error response from server");
-        } else {
-          return response.json();
         }
+        return response.json();
       })
       .then((data) => updateLocalStorage([...albums, data]))
       .catch((error) => console.error("Błąd dodawania albumu:", error));
@@ -134,9 +143,9 @@ export default function AlbumList() {
         />
         <input
           type="file"
-          placeholder="Cover"
-          value={newAlbum.cover}
-          onChange={(e) => setNewAlbum({ ...newAlbum, cover: e.target.value })}
+          onChange={(e) =>
+            setNewAlbum({ ...newAlbum, cover: e.target.files[0] })
+          }
           className="border p-2 rounded w-full mb-2"
           accept="image/png, image/jpeg"
         />
@@ -154,27 +163,34 @@ py-2 rounded"
             key={album.id}
             className="border-b py-2 flex justify-between items-center"
           >
-            <span>
-              <strong>
-                {album.id} {album.band}
-              </strong>{" "}
-              - {album.title} ({album.year})
-            </span>
-            <div>
-              <button
-                onClick={() => updateAlbum(album.id)}
-                className="bg-yellow-500
-textwhite px-2 py-1 rounded mr-2"
-              >
-                Edytuj
-              </button>
-              <button
-                onClick={() => deleteAlbum(album.id)}
-                className="bg-red-500 textwhite px-
-2 py-1 rounded"
-              >
-                Usuń
-              </button>
+            <div className="flex-column">
+              <span>
+                <strong>
+                  {album.id} {album.band}
+                </strong>{" "}
+                - {album.title} ({album.year})
+              </span>
+              {album.cover && (
+                <img
+                  src={`${apiURL}${album.cover}`}
+                  alt={`${album.title} cover`}
+                  className="w-16 h-16 object-cover rounded"
+                />
+              )}
+              <div>
+                <button
+                  onClick={() => updateAlbum(album.id)}
+                  className="bg-yellow-500 text-white px-2 py-1 rounded mr-2"
+                >
+                  Edytuj
+                </button>
+                <button
+                  onClick={() => deleteAlbum(album.id)}
+                  className="bg-red-500 text-white px-2 py-1 rounded"
+                >
+                  Usuń
+                </button>
+              </div>
             </div>
           </li>
         ))}
