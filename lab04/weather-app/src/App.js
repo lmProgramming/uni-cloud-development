@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import {
   WiDaySunny,
@@ -102,8 +102,7 @@ function App() {
     }
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city.trim()}&appid=${apiKey}&units=
-  metric&lang=pl`
+        `https://api.openweathermap.org/data/2.5/weather?q=${city.trim()}&appid=${apiKey}&units=metric&lang=pl`
       );
       if (!response.ok) {
         throw new Error(`Błąd HTTP: ${response.status}`);
@@ -113,6 +112,7 @@ function App() {
         alert("Nie udało się pobrać danych pogodowych.");
         return;
       }
+      console.log(data.weather[0].main);
       setWeatherData(data);
     } catch (error) {
       console.error("Błąd:", error);
@@ -123,7 +123,8 @@ function App() {
     weatherData &&
     weatherData.weather &&
     weatherData.weather[0] &&
-    weatherData.country
+    weatherData.sys &&
+    weatherData.sys.country
       ? weatherConditions[weatherData.weather[0].main] ||
         weatherConditions.Clear
       : weatherConditions.Clear;
