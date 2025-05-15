@@ -135,7 +135,7 @@ export default function AlbumList() {
         updateLocalStorage(updatedAlbums);
       })
       .catch((error) => console.error("Error on album PUT:", error))
-      .finally(setAlbumEditedID(-1));
+      .finally(() => setAlbumEditedID(-1));
   };
 
   const deleteAlbum = (id) => {

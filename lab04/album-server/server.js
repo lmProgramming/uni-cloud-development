@@ -120,13 +120,12 @@ app.get("/", (req, res) => {
 
 app.get("/albums/:band", (req, res) => {
   const band = decodeURIComponent(req.params.band.toLowerCase());
-  const filteredAlbums = albums.filter(
-    (album) => album.band.toLowerCase() === band
-  );
-  filteredAlbums.map((album) => ({
-    ...album,
-    genre: { id: album.genre, name: albums.find((a) => a.id === album.genre) },
-  }));
+  const filteredAlbums = albums
+    .filter((album) => album.band.toLowerCase() === band)
+    .map((album) => ({
+      ...album,
+      genre: { id: album.genre, name: genres.find((g) => g.id === album.genre)?.name || "Unknown" },
+    }));
   res.json(filteredAlbums);
 });
 
