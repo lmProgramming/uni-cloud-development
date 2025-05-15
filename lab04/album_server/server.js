@@ -130,6 +130,10 @@ app.get("/albums/:band", (req, res) => {
   res.json(filteredAlbums);
 });
 
+app.get("/genres", (req, res) => {
+  res.json(genres);
+});
+
 app.post("/albums", upload.single("cover"), (req, res) => {
   const { band, title, year, genre } = req.body;
   const cover = req.file ? `/uploads/${req.file.filename}` : null;

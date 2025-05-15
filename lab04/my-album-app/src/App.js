@@ -7,6 +7,7 @@ export default function AlbumList() {
   const [isDarkMode, setDarkMode] = useState(false);
   const [albums, setAlbums] = useState([]);
   const [band, setBand] = useState("");
+  const [genres, setGenres] = useState([]);
   const [newAlbum, setNewAlbum] = useState({
     band: "",
     title: "",
@@ -22,6 +23,13 @@ export default function AlbumList() {
     genre: "",
     cover: "",
   });
+
+  useEffect(() => {
+    fetch(`${apiURL}/genres`)
+      .then((res) => res.json())
+      .then(setGenres)
+      .catch((err) => console.error("Error fetching genres:", err));
+  }, []);
 
   useEffect(() => {
     const storedAlbums = localStorage.getItem("albums");
@@ -126,7 +134,8 @@ export default function AlbumList() {
         });
         updateLocalStorage(updatedAlbums);
       })
-      .catch((error) => console.error("Error on album PUT:", error));
+      .catch((error) => console.error("Error on album PUT:", error))
+      .finally(setAlbumEditedID(-1));
   };
 
   const deleteAlbum = (id) => {
@@ -192,15 +201,20 @@ export default function AlbumList() {
             onChange={(e) => setNewAlbum({ ...newAlbum, year: e.target.value })}
             className="border p-2 rounded w-full mb-2"
           />
-          <input
-            type="text"
-            placeholder="Genre..."
+          <select
             value={newAlbum.genre}
             onChange={(e) =>
-              setNewAlbum({ ...newAlbum, genre: e.target.value })
+              setNewAlbum({ ...newAlbum, genre: Number(e.target.value) })
             }
             className="border p-2 rounded w-full mb-2"
-          />
+          >
+            <option value="">Select genre...</option>
+            {genres.map((g) => (
+              <option key={g.id} value={g.id}>
+                {g.name}
+              </option>
+            ))}
+          </select>
           <input
             placeholder="Cover..."
             type="file"
@@ -231,13 +245,17 @@ py-2 rounded"
               </strong>{" "}
               - {album.title} ({album.year})
             </span>
-            {album.cover && (
+            {
               <img
                 src={`${apiURL}${album.cover}`}
                 alt={`${album.title} cover`}
                 className="w-32 h-32 object-cover rounded pb-8"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "missing.png";
+                }}
               />
-            )}
+            }
             <div>
               <button
                 onClick={() => handleEditAlbumClick(album.id)}
@@ -280,15 +298,23 @@ py-2 rounded"
                     }
                     className="border p-2 rounded w-full mb-2"
                   />
-                  <input
-                    type="text"
-                    placeholder="Genre..."
+                  <select
                     value={albumEdited.genre}
                     onChange={(e) =>
-                      setAlbumEdited({ ...albumEdited, genre: e.target.value })
+                      setAlbumEdited({
+                        ...albumEdited,
+                        genre: Number(e.target.value),
+                      })
                     }
                     className="border p-2 rounded w-full mb-2"
-                  />
+                  >
+                    <option value="">Select genre...</option>
+                    {genres.map((g) => (
+                      <option key={g.id} value={g.id}>
+                        {g.name}
+                      </option>
+                    ))}
+                  </select>
                   <button
                     onClick={putEditedAlbum}
                     className="bg-green-500 text-white px-4 py-2 rounded"
