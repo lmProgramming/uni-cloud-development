@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import Switch from "./Switch";
 
 export default function AlbumList() {
   const apiURL = "http://localhost:3000";
 
+  const [isDarkMode, setDarkMode] = useState(false);
   const [albums, setAlbums] = useState([]);
   const [band, setBand] = useState("");
   const [newAlbum, setNewAlbum] = useState({
@@ -35,6 +37,23 @@ export default function AlbumList() {
         .catch((error) => console.error("Error during fetch:", error));
     }
   }, []);
+
+  useEffect(() => {
+    if (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
+      setDarkMode(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [isDarkMode]);
 
   const updateLocalStorage = (updatedAlbums) => {
     setAlbums(updatedAlbums);
@@ -124,9 +143,17 @@ export default function AlbumList() {
   return (
     <>
       {" "}
-      <div className="p-4 max-w-lg mx-auto">
+      <div className="flex items-center justify-end gap-2 mt-4 mr-4">
+        <img src="moon.png" className="h-[32px] w-[32px]" alt="Moon icon" />
+        <Switch
+          isOn={isDarkMode}
+          handleToggle={() => setDarkMode(!isDarkMode)}
+          onColor="#2b2b4a"
+        />
+      </div>
+      <div className="p-4 max-w-lg mx-auto bg-white dark:bg-gray-800">
         <h1 className="text-xl font-bold mb-4">Album WORLD</h1>
-        <div className="flex gap-2 mb-4">
+        <div className="flex gap-2 mb-4 text-black">
           <input
             type="text"
             placeholder="Enter band name to search"
@@ -141,7 +168,7 @@ export default function AlbumList() {
             Search
           </button>
         </div>
-        <div className="mb-4">
+        <div className="mb-4 text-black">
           <input
             type="text"
             placeholder="Band..."
@@ -192,11 +219,11 @@ py-2 rounded"
           </button>
         </div>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start">
         {albums.map((album) => (
           <div
             key={album.id}
-            className="border-b py-2 flex flex-col justify-between items-center"
+            className="py-2 flex flex-col items-center dark:bg-gray-800 rounded m-2 w-full"
           >
             <span className="pb-8 align-top">
               <strong>
@@ -224,8 +251,8 @@ py-2 rounded"
               >
                 Delete
               </button>
-              {albumEditedID && albumEditedID === album.id && (
-                <div className="mt-2 mb-4">
+              {albumEditedID === album.id && (
+                <div className="mt-2 mb-4 text-black">
                   <input
                     type="text"
                     placeholder="Band..."
