@@ -12,7 +12,14 @@ export default function AlbumList() {
     genre: "",
     cover: "",
   });
-  const [albumEdited, setAlbumEdited] = useState(null);
+  const [albumEditedID, setAlbumEditedID] = useState(0);
+  const [albumEdited, setAlbumEdited] = useState({
+    band: "",
+    title: "",
+    year: "",
+    genre: "",
+    cover: "",
+  });
 
   useEffect(() => {
     const storedAlbums = localStorage.getItem("albums");
@@ -40,6 +47,15 @@ export default function AlbumList() {
       .then((response) => response.json())
       .then((data) => updateLocalStorage(data))
       .catch((error) => console.error("Error during fetch:", error));
+  };
+
+  const handleEditAlbumClick = (albumID) => {
+    if (albumEditedID === albumID) {
+      setAlbumEditedID(-1);
+      return;
+    }
+    setAlbumEditedID(albumID);
+    setAlbumEdited(albums.find((a) => a.id === albumID));
   };
 
   const addAlbum = () => {
@@ -70,17 +86,25 @@ export default function AlbumList() {
       .catch((error) => console.error("Error on form save:", error));
   };
 
-  const updateAlbum = (id, newTitle) => {
+  const putEditedAlbum = () => {
+    const id = albumEditedID;
     fetch(`http://localhost:3000/albums/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title: newTitle }),
+      body: JSON.stringify(albumEdited),
     })
       .then((response) => response.json())
       .then(() => {
-        const updatedAlbums = albums.map((album) =>
-          album.id === id ? { ...album, title: newTitle } : album
-        );
+        const updatedAlbums = albums.map((album) => {
+          var temp = Object.assign({}, album);
+          if (album.id === id) {
+            temp.band = albumEdited.band;
+            temp.title = albumEdited.title;
+            temp.year = albumEdited.year;
+            temp.genre = albumEdited.genre;
+          }
+          return temp;
+        });
         updateLocalStorage(updatedAlbums);
       })
       .catch((error) => console.error("Error on album PUT:", error));
@@ -101,7 +125,7 @@ export default function AlbumList() {
     <>
       {" "}
       <div className="p-4 max-w-lg mx-auto">
-        <h1 className="text-xl font-bold mb-4">Album.NET</h1>
+        <h1 className="text-xl font-bold mb-4">Album WORLD</h1>
         <div className="flex gap-2 mb-4">
           <input
             type="text"
@@ -132,7 +156,7 @@ export default function AlbumList() {
             onChange={(e) =>
               setNewAlbum({ ...newAlbum, title: e.target.value })
             }
-            className="border p-2 rounded w-full mb2"
+            className="border p-2 rounded w-full mb-2"
           />
           <input
             type="number"
@@ -174,7 +198,7 @@ py-2 rounded"
             key={album.id}
             className="border-b py-2 flex flex-col justify-between items-center"
           >
-            <span className="pb-8">
+            <span className="pb-8 align-top">
               <strong>
                 {album.id} {album.band}
               </strong>{" "}
@@ -189,7 +213,7 @@ py-2 rounded"
             )}
             <div>
               <button
-                onClick={() => updateAlbum(album.id)}
+                onClick={() => handleEditAlbumClick(album.id)}
                 className="bg-yellow-500 text-white px-2 py-1 rounded mr-2"
               >
                 Edit
@@ -200,6 +224,52 @@ py-2 rounded"
               >
                 Delete
               </button>
+              {albumEditedID && albumEditedID === album.id && (
+                <div className="mt-2 mb-4">
+                  <input
+                    type="text"
+                    placeholder="Band..."
+                    value={albumEdited.band}
+                    onChange={(e) =>
+                      setAlbumEdited({ ...albumEdited, band: e.target.value })
+                    }
+                    className="border p-2 rounded w-full mb-2"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Title..."
+                    value={albumEdited.title}
+                    onChange={(e) =>
+                      setAlbumEdited({ ...albumEdited, title: e.target.value })
+                    }
+                    className="border p-2 rounded w-full mb-2"
+                  />
+                  <input
+                    type="number"
+                    placeholder="Year..."
+                    value={albumEdited.year}
+                    onChange={(e) =>
+                      setAlbumEdited({ ...albumEdited, year: e.target.value })
+                    }
+                    className="border p-2 rounded w-full mb-2"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Genre..."
+                    value={albumEdited.genre}
+                    onChange={(e) =>
+                      setAlbumEdited({ ...albumEdited, genre: e.target.value })
+                    }
+                    className="border p-2 rounded w-full mb-2"
+                  />
+                  <button
+                    onClick={putEditedAlbum}
+                    className="bg-green-500 text-white px-4 py-2 rounded"
+                  >
+                    Save Edit
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         ))}

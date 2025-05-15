@@ -162,18 +162,19 @@ app.post("/albums", upload.single("cover"), (req, res) => {
 
 app.put("/albums/:id", (req, res) => {
   const id = parseInt(req.params.id);
-  const { band, title, year, genre, cover } = req.body;
+  const { band, title, year, genre } = req.body;
   const album = albums.find((album) => album.id === id);
+  console.log(band, title, year, genre);
   if (!album) {
+    console.log(`No album found of id: ${id}.`);
     return res.status(404).json({
-      message: "Album nie znaleziony.",
+      message: `No album found of id: ${id}.`,
     });
   }
   if (band) album.band = band;
   if (title) album.title = title;
   if (genre) album.genre = genre;
   if (year) album.year = year;
-  if (cover) album.cover = cover;
   res.json(album);
 });
 
