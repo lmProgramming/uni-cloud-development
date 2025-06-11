@@ -1045,6 +1045,10 @@ fajnie integruje się z różnymi usługami AWS
 
 ma zestaw reguł, i event jest wysyłany w odpowiednią usługę
 
+## AWS Private Link
+
+prywatny i bezpieczny dostęp do usług AWS nawet z prywatnej podsieci
+
 ## dodatki z wykładu
 
 ### co warto od razu
