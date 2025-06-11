@@ -45,7 +45,7 @@ domyślnie HTTP
 
 obiekty to dane (zdjęcia, dokument, film...), klucze, metadane, tagi
 
-obiekty zawierają metadane (content type, content lenght, last modified, etag)
+obiekty zawierają metadane (content type, content lenght, last modified, tag)
 
 aby zmienić obiekt, trzeba w całości go wrzucić od nowa
 
